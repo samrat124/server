@@ -2,6 +2,7 @@ const express =require ('express');
 const cors =require ('cors');
 const bodyParser= require ('body-parser');
 const bookRouter  =require ('./src/routes/book');
+const ConnectDataBase=require('./src/models/db')
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,6 +13,13 @@ app.use(bodyParser.json());
 
 app.use('/books', bookRouter);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+ConnectDataBase().then(()=>{
+
+  app.listen(PORT,()=>{
+
+      console.log(`server is listening at ${PORT}`);
+     
+     })
+
+})
+
