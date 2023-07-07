@@ -1,11 +1,12 @@
-const express =require ('express');
-const { createBook, getBooks } =require('../controllers/book');
-// import { authenticate, authorize } from '../middleware/auth';
+import express from 'express';
+import { createBook, getBooks } from '../controllers/book';
+import { authenticate, authorize } from '../middleware/auth';
 
-const bookRouter = express.Router();
+export const bookRouter = express.Router();
 
-bookRouter.post('/',  createBook);
-bookRouter.get('/',  getBooks);
+bookRouter.post('/', authenticate, authorize(['CREATOR']), createBook);
+bookRouter.get('/', authenticate, getBooks);
 
 
-module.exports=bookRouter;
+
+module.exports=bookRouter
